@@ -25,8 +25,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Optional: Copy a custom MariaDB configuration file (if needed)
-# Uncomment the following line if you have a custom configuration
-# COPY ./conf/my.cnf /etc/mysql/my.cnf
+COPY tools/my.cnf /etc/mysql/my.cnf
 
 # Expose MariaDB's default port
 EXPOSE 3306
