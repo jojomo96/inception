@@ -26,7 +26,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 
     if ! wp core is-installed --allow-root; then
         wp core install \
-            --url="${WORDPRESS_URL}" \
+            --url="${WORDPRESS_DOMAIN}" \
             --title="${WORDPRESS_TITLE}" \
             --admin_user="${WORDPRESS_ADMIN_USER}" \
             --admin_password="${WORDPRESS_ADMIN_PASSWORD}" \
@@ -39,28 +39,13 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     if ! wp user get "${WORDPRESS_USER}" --field=ID --allow-root > /dev/null 2>&1; then
         wp user create \
             "${WORDPRESS_USER}" \
-            --role="${WORDPRESS_USER_ROLE}" \
+            "${WORDPRESS_USER_EMAIL}" \
             --user_pass="${WORDPRESS_USER_PASSWORD}" \
             --allow-root
     else
         echo "User ${WORDPRESS_USER} already exists. Skipping user creation."
     fi
 
-#	wp plugin install \
-#		redis-cache \
-#		--activate \
-#		--allow-root
-#
-#	wp plugin update \
-#		--all \
-#		--allow-root
-#
-#	wp config set WP_CACHE true --raw --allow-root
-#	wp config set WP_REDIS_HOST redis --allow-root
-#	wp config set WP_REDIS_PORT 6379 --allow-root
-#
-#	wp redis enable \
-#	--allow-root
 
 	echo "WordPress configuration complete."
 fi
@@ -69,5 +54,5 @@ fi
 chown -R www-data:www-data /var/www/html/
 
 echo "WordPress is ready."
-# Start Apache
-exec apachectl -D FOREGROUND
+
+php-fpm7.4 -F

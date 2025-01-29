@@ -21,6 +21,3 @@ COPY tools/initialize_wordpress.sql /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 COPY tools/my.cnf /etc/mysql/my.cnf
-
-# TODO remove
-EXPOSE 3306

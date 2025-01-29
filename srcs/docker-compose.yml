@@ -6,8 +6,6 @@ services:
       context: ./requirements/mariadb
     container_name: mariadb
     restart: always
-    ports:
-      - "3306:3306"
     environment:
       WORDPRESS_DB_DATABASE: ${MYSQL_DATABASE}
       WORDPRESS_DB_USER: ${MYSQL_USER}
@@ -21,11 +19,9 @@ services:
     build:
       context: ./requirements/wordpress
     container_name: wordpress
-#    restart: always
+    #    restart: always
     depends_on:
       - mariadb
-    ports:
-      - "8080:80"
     environment:
       WORDPRESS_DB_HOST: mariadb
       WORDPRESS_DB_USER: ${MYSQL_USER}
@@ -40,11 +36,25 @@ services:
       WORDPRESS_DOMAIN: ${WORDPRESS_DOMAIN}
       WORDPRESS_USER: ${WORDPRESS_USER}
       WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
-      WORDPRESS_PASSWORD: ${WORDPRESS_PASSWORD}
+      WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
     volumes:
       - wordpress_data:/var/www/html/
     networks:
       - my_network
+
+  nginx:
+    build:
+      context: ./requirements/nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html/
+    networks:
+      - my_network
+    environment:
+      WORDPRESS_DOMAIN: ${WORDPRESS_DOMAIN}
 
 volumes:
   mariadb_data:
