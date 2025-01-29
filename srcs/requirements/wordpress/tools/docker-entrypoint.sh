@@ -10,14 +10,59 @@ done
 
 # Check if wp-config.php exists
 if [ ! -f /var/www/html/wp-config.php ]; then
-    echo "Creating wp-config.php..."
-    cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+	cd /var/www/html
+	wp core download \
+	--allow-root
 
-    sed -i "s/database_name_here/${WORDPRESS_DB_NAME}/" /var/www/html/wp-config.php
-    sed -i "s/username_here/${WORDPRESS_DB_USER}/" /var/www/html/wp-config.php
-    sed -i "s/password_here/${WORDPRESS_DB_PASSWORD}/" /var/www/html/wp-config.php
-    sed -i "s/localhost/${WORDPRESS_DB_HOST}/" /var/www/html/wp-config.php
-    sed -i "s/wp_/${WORDPRESS_TABLE_PREFIX}/" /var/www/html/wp-config.php
+
+    echo "Creating wp-config.php..."
+    wp config create \
+        --dbname="${WORDPRESS_DB_NAME}" \
+        --dbuser="${WORDPRESS_DB_USER}" \
+        --dbpass="${WORDPRESS_DB_PASSWORD}" \
+        --dbhost="${WORDPRESS_DB_HOST}" \
+        --dbprefix="${WORDPRESS_TABLE_PREFIX}" \
+        --allow-root
+
+    if ! wp core is-installed --allow-root; then
+        wp core install \
+            --url="${WORDPRESS_URL}" \
+            --title="${WORDPRESS_TITLE}" \
+            --admin_user="${WORDPRESS_ADMIN_USER}" \
+            --admin_password="${WORDPRESS_ADMIN_PASSWORD}" \
+            --admin_email="${WORDPRESS_ADMIN_EMAIL}" \
+            --allow-root
+    else
+        echo "WordPress is already installed. Skipping core installation."
+    fi
+
+    if ! wp user get "${WORDPRESS_USER}" --field=ID --allow-root > /dev/null 2>&1; then
+        wp user create \
+            "${WORDPRESS_USER}" \
+            --role="${WORDPRESS_USER_ROLE}" \
+            --user_pass="${WORDPRESS_USER_PASSWORD}" \
+            --allow-root
+    else
+        echo "User ${WORDPRESS_USER} already exists. Skipping user creation."
+    fi
+
+#	wp plugin install \
+#		redis-cache \
+#		--activate \
+#		--allow-root
+#
+#	wp plugin update \
+#		--all \
+#		--allow-root
+#
+#	wp config set WP_CACHE true --raw --allow-root
+#	wp config set WP_REDIS_HOST redis --allow-root
+#	wp config set WP_REDIS_PORT 6379 --allow-root
+#
+#	wp redis enable \
+#	--allow-root
+
+	echo "WordPress configuration complete."
 fi
 
 # Set correct permissions

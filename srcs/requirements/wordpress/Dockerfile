@@ -24,17 +24,14 @@ RUN apt-get update && apt-get install -y \
 RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf \
     && a2enconf servername
 
+# Install wp-cli
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp
+
 # (Optional) Enable Apache modules you might need (e.g., php, rewrite).
 RUN a2enmod php7.4
 RUN a2enmod rewrite
-
-# ---- 4. Download and setup WordPress ----
-RUN curl -o /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz \
-    && tar -xzf /tmp/wordpress.tar.gz -C /tmp/ \
-    && rm /tmp/wordpress.tar.gz \
-    && mv /tmp/wordpress/* /var/www/html \
-    && rm -rf /tmp/wordpress \
-    && chown -R www-data:www-data /var/www/html
 
 # ---- 5. Remove default index.html ----
 RUN rm /var/www/html/index.html
