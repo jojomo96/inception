@@ -16,10 +16,23 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
 
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+    container_name: wordpress
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
 
 volumes:
   mariadb_data:
-
-#networks:
-#  inception_network:
-#    driver: bridge
+  wordpress_data:
