@@ -23,9 +23,9 @@ if [ ! -f "/var/lib/mysql/.mariadb_initialized" ]; then
     echo "Setting up WordPress database and user..."
 
 	mysql -u root <<-EOSQL
-		CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-		CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
-		GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
+		CREATE DATABASE IF NOT EXISTS ${WORDPRESS_DB_DATABASE} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+		CREATE USER IF NOT EXISTS '${WORDPRESS_DB_USER}'@'%' IDENTIFIED BY '${WORDPRESS_DB_PASSWORD}';
+		GRANT ALL PRIVILEGES ON ${WORDPRESS_DB_DATABASE}.* TO '${WORDPRESS_DB_USER}'@'%';
 		FLUSH PRIVILEGES;
 	EOSQL
 
@@ -35,6 +35,7 @@ if [ ! -f "/var/lib/mysql/.mariadb_initialized" ]; then
     touch /var/lib/mysql/.mariadb_initialized
 fi
 
+# Stop the temporary MariaDB instance
 # Stop the temporary MariaDB instance
 mysqladmin shutdown
 
