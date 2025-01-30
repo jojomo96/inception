@@ -7,13 +7,10 @@ while ! mysqladmin ping -h"${WORDPRESS_DB_HOST}" --silent; do
     sleep 1
 done
 
-
 # Check if wp-config.php exists
 if [ ! -f /var/www/html/wp-config.php ]; then
 	cd /var/www/html
-	wp core download \
-	--allow-root
-
+	wp core download --allow-root
 
     echo "Creating wp-config.php..."
     wp config create \
@@ -46,8 +43,17 @@ if [ ! -f /var/www/html/wp-config.php ]; then
         echo "User ${WORDPRESS_USER} already exists. Skipping user creation."
     fi
 
+    echo "Installing Redis Object Cache Plugin..."
+    wp plugin install redis-cache --activate --allow-root
 
-	echo "WordPress configuration complete."
+    echo "Enabling Redis Cache..."
+    wp config set WP_REDIS_HOST "redis" --allow-root
+    wp config set WP_REDIS_PORT "6379" --raw --allow-root
+    wp config set WP_CACHE true --raw --allow-root
+
+	wp redis enable --allow-root
+
+    echo "WordPress configuration complete."
 fi
 
 # Set correct permissions

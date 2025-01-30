@@ -1,65 +1,79 @@
 version: "3.9"
 
 services:
-  mariadb:
-    build:
-      context: ./requirements/mariadb
-    container_name: mariadb
-    restart: always
-    environment:
-      WORDPRESS_DB_DATABASE: ${MYSQL_DATABASE}
-      WORDPRESS_DB_USER: ${MYSQL_USER}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - mariadb_data:/var/lib/mysql
-    networks:
-      - my_network
+    mariadb:
+        build:
+            context: ./requirements/mariadb
+        container_name: mariadb
+        restart: always
+        environment:
+            WORDPRESS_DB_DATABASE: ${MYSQL_DATABASE}
+            WORDPRESS_DB_USER: ${MYSQL_USER}
+            WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+        volumes:
+            - mariadb_data:/var/lib/mysql
+        networks:
+            - my_network
 
-  wordpress:
-    build:
-      context: ./requirements/wordpress
-    container_name: wordpress
-    #    restart: always
-    depends_on:
-      - mariadb
-    environment:
-      WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: ${MYSQL_USER}
-      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
-      WORDPRESS_SITE_URL: ${WORDPRESS_SITE_URL}
-      WORDPRESS_ADMIN_USER: ${WORDPRESS_ADMIN_USER}
-      WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
-      WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
-      WORDPRESS_TABLE_PREFIX: wp_
-      WORDPRESS_SITE_TITLE: ${WORDPRESS_SITE_TITLE}
-      WORDPRESS_DOMAIN: ${WORDPRESS_DOMAIN}
-      WORDPRESS_USER: ${WORDPRESS_USER}
-      WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
-      WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
-    volumes:
-      - wordpress_data:/var/www/html/
-    networks:
-      - my_network
+    wordpress:
+        build:
+            context: ./requirements/wordpress
+        container_name: wordpress
+        restart: always
+        depends_on:
+            - mariadb
+        environment:
+            WORDPRESS_DB_HOST: mariadb
+            WORDPRESS_DB_USER: ${MYSQL_USER}
+            WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+            WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+            WORDPRESS_SITE_URL: ${WORDPRESS_SITE_URL}
+            WORDPRESS_ADMIN_USER: ${WORDPRESS_ADMIN_USER}
+            WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
+            WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
+            WORDPRESS_TABLE_PREFIX: wp_
+            WORDPRESS_SITE_TITLE: ${WORDPRESS_SITE_TITLE}
+            WORDPRESS_DOMAIN: ${WORDPRESS_DOMAIN}
+            WORDPRESS_USER: ${WORDPRESS_USER}
+            WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
+            WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
+        volumes:
+            - wordpress_data:/var/www/html/
+        networks:
+            - my_network
 
-  nginx:
-    build:
-      context: ./requirements/nginx
-    container_name: nginx
-    restart: always
-    ports:
-      - "443:443"
-    volumes:
-      - wordpress_data:/var/www/html/
-    networks:
-      - my_network
-    environment:
-      WORDPRESS_DOMAIN: ${WORDPRESS_DOMAIN}
+    nginx:
+        build:
+            context: ./requirements/nginx
+        container_name: nginx
+        restart: always
+        ports:
+            - "443:443"
+        volumes:
+            - wordpress_data:/var/www/html/
+        networks:
+            - my_network
+        environment:
+            WORDPRESS_DOMAIN: ${WORDPRESS_DOMAIN}
+
+    redis:
+        build:
+            context: ./requirements/redis
+            dockerfile: Dockerfile
+        restart: always
+        container_name: redis
+        volumes:
+            - redis_data:/data
+        networks:
+            - my_network
+        depends_on:
+            - wordpress
 
 volumes:
-  mariadb_data:
-  wordpress_data:
+    mariadb_data:
+    wordpress_data:
+    redis_data:
 
 networks:
-  my_network:
-    driver: bridge
+    my_network:
+        driver: bridge
