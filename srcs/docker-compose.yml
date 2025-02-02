@@ -86,11 +86,24 @@ services:
             - "21:21"              # FTP Command Port
             - "20:20"              # FTP Data Port
             - "30000-30100:30000-30100"  # Passive Mode Ports
+    adminer:
+        build:
+            context: ./requirements/adminer
+            dockerfile: Dockerfile
+        container_name: adminer
+        restart: always
+        depends_on:
+            - mariadb
+        networks:
+            - my_network
+        volumes:
+            - adminer_data:/var/www/html
 
 volumes:
     mariadb_data:
     wordpress_data:
     redis_data:
+    adminer_data:
 
 networks:
     my_network:
