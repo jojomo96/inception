@@ -69,6 +69,24 @@ services:
         depends_on:
             - wordpress
 
+    ftp:
+        build:
+            context: ./requirements/ftp
+            dockerfile: Dockerfile
+        restart: always
+        container_name: ftp
+        volumes:
+            - wordpress_data:/var/www/html
+        environment:
+            FTP_USER: ${FTP_USER}
+            FTP_PASS: ${FTP_PASSWORD}
+        depends_on:
+            - wordpress
+        ports:
+            - "21:21"              # FTP Command Port
+            - "20:20"              # FTP Data Port
+            - "30000-30100:30000-30100"  # Passive Mode Ports
+
 volumes:
     mariadb_data:
     wordpress_data:
