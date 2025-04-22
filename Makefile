@@ -60,4 +60,4 @@ env:
 			echo ".env file already exists."; \
 		fi
 
-.PHONY: all build up down clean re env status create-data-dir
+.PHONY: all build up down clean re env status create-data-dir clean-env
