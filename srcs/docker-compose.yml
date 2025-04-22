@@ -126,25 +126,25 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: "/home/jmoritz/data"
+            device: "/home/jmoritz/data/mariadb"
             o: bind
     wordpress_data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/jmoritz/data"
+            device: "/home/jmoritz/data/wordpress"
             o: bind
     redis_data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/jmoritz/data"
+            device: "/home/jmoritz/data/redis"
             o: bind
     adminer_data:
         driver: local
         driver_opts:
             type: none
-            device: "/home/jmoritz/data"
+            device: "/home/jmoritz/data/adminer"
             o: bind
 
 networks:
