@@ -41,12 +41,12 @@ env:
 			echo "MYSQL_USER=wordpress_db_user" >> $(ENV_FILE); \
 			echo "MYSQL_PASSWORD=wordpress_db_pass" >> $(ENV_FILE); \
 			echo "WORDPRESS_TABLE_PREFIX=wp_" >> $(ENV_FILE); \
-			echo "WORDPRESS_SITE_URL=http://localhost:8080" >> $(ENV_FILE); \
+			echo "WORDPRESS_SITE_URL=https://jmoritz.42.fr:8080" >> $(ENV_FILE); \
 			echo "WORDPRESS_ADMIN_USER=hans" >> $(ENV_FILE); \
 			echo "WORDPRESS_ADMIN_PASSWORD=hans_password" >> $(ENV_FILE); \
 			echo "WORDPRESS_ADMIN_EMAIL=hans@example.com" >> $(ENV_FILE); \
 			echo "WORDPRESS_SITE_TITLE='WordPress Site'" >> $(ENV_FILE); \
-			echo "WORDPRESS_DOMAIN=localhost" >> $(ENV_FILE); \
+			echo "WORDPRESS_DOMAIN=jmoritz.42.fr" >> $(ENV_FILE); \
 			echo "WORDPRESS_USER=wordpress_user" >> $(ENV_FILE); \
 			echo "WORDPRESS_USER_EMAIL=user@email.com" >> $(ENV_FILE); \
 			echo "WORDPRESS_USER_PASSWORD=wordpress_pass" >> $(ENV_FILE); \
