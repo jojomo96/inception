@@ -98,6 +98,17 @@ services:
             - my_network
         volumes:
             - adminer_data:/var/www/html
+    stirlingpdf:
+        build:
+            context: ./requirements/stirlingpdf
+            dockerfile: Dockerfile
+        container_name: stirlingpdf
+        restart: always
+        networks:
+            - my_network
+        ports:
+            - "8080:8080"
+
 
 volumes:
     mariadb_data:

@@ -11,6 +11,5 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /var/www/html && \
     wget "https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php" -O /var/www/html/index.php
 
-
 # Start PHP built-in server
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
+CMD ["php", "-S", "0.0.0.0:9080", "-t", "/var/www/html"]
