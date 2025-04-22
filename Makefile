@@ -27,13 +27,25 @@ status:
 
 env:
 	@if [ ! -f $(ENV_FILE) ]; then \
-		echo "MYSQL_ROOT_PASSWORD=example" > $(ENV_FILE); \
-		echo "MYSQL_DATABASE=my_database" >> $(ENV_FILE); \
-		echo "MYSQL_USER=my_user" >> $(ENV_FILE); \
-		echo "MYSQL_PASSWORD=my_password" >> $(ENV_FILE); \
-		echo ".env file created."; \
-	else \
-		echo ".env file already exists."; \
-	fi
+			echo "MYSQL_ROOT_PASSWORD=example" > $(ENV_FILE); \
+			echo "MYSQL_DATABASE=wordpress_db" >> $(ENV_FILE); \
+			echo "MYSQL_USER=wordpress_db_user" >> $(ENV_FILE); \
+			echo "MYSQL_PASSWORD=wordpress_db_pass" >> $(ENV_FILE); \
+			echo "WORDPRESS_TABLE_PREFIX=wp_" >> $(ENV_FILE); \
+			echo "WORDPRESS_SITE_URL=http://localhost:8080" >> $(ENV_FILE); \
+			echo "WORDPRESS_ADMIN_USER=admin" >> $(ENV_FILE); \
+			echo "WORDPRESS_ADMIN_PASSWORD=admin_password" >> $(ENV_FILE); \
+			echo "WORDPRESS_ADMIN_EMAIL=admin@example.com" >> $(ENV_FILE); \
+			echo "WORDPRESS_SITE_TITLE='WordPress Site'" >> $(ENV_FILE); \
+			echo "WORDPRESS_DOMAIN=localhost" >> $(ENV_FILE); \
+			echo "WORDPRESS_USER=wordpress_user" >> $(ENV_FILE); \
+			echo "WORDPRESS_USER_EMAIL=user@email.com" >> $(ENV_FILE); \
+			echo "WORDPRESS_USER_PASSWORD=wordpress_pass" >> $(ENV_FILE); \
+			echo "FTP_USER=ftp_user" >> $(ENV_FILE); \
+			echo "FTP_PASSWORD=ftp_pass" >> $(ENV_FILE); \
+			echo ".env file created."; \
+		else \
+			echo ".env file already exists."; \
+		fi
 
 .PHONY: all build up down clean re env status
