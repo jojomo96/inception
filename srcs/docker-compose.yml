@@ -109,6 +109,17 @@ services:
         ports:
             - "8080:8080"
 
+    staticside:
+        build:
+            context: ./requirements/staticside
+            dockerfile: Dockerfile
+        container_name: staticside
+        restart: always
+        ports:
+            - "8081:80"  # Forward port 8081 on the host to port 80 in the container
+        networks:
+            - my_network
+
 
 volumes:
     mariadb_data:
@@ -118,4 +129,3 @@ volumes:
 
 networks:
     my_network:
-        driver: bridge
