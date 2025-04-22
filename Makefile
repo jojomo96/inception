@@ -3,9 +3,13 @@
 # Variables
 DOCKER_COMPOSE = docker compose -f srcs/docker-compose.yml
 ENV_FILE = srcs/.env
+DATA_DIR = /home/jmoritz/data
 
 # Targets
-all: build up
+all: create-data-dir build up
+
+create-data-dir:
+	mkdir -p $(DATA_DIR)
 
 build:
 	$(DOCKER_COMPOSE) build
@@ -48,4 +52,4 @@ env:
 			echo ".env file already exists."; \
 		fi
 
-.PHONY: all build up down clean re env status
+.PHONY: all build up down clean re env status create-data-dir
