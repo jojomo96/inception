@@ -1,7 +1,7 @@
 # Makefile for Inception project
 
 # Variables
-DOCKER_COMPOSE = docker-compose -f srcs/requirements/docker-compose.yml
+DOCKER_COMPOSE = docker compose -f srcs/requirements/docker-compose.yml
 ENV_FILE = srcs/.env
 
 # Targets
@@ -33,9 +33,9 @@ env:
 			echo "MYSQL_PASSWORD=wordpress_db_pass" >> $(ENV_FILE); \
 			echo "WORDPRESS_TABLE_PREFIX=wp_" >> $(ENV_FILE); \
 			echo "WORDPRESS_SITE_URL=http://localhost:8080" >> $(ENV_FILE); \
-			echo "WORDPRESS_ADMIN_USER=admin" >> $(ENV_FILE); \
-			echo "WORDPRESS_ADMIN_PASSWORD=admin_password" >> $(ENV_FILE); \
-			echo "WORDPRESS_ADMIN_EMAIL=admin@example.com" >> $(ENV_FILE); \
+			echo "WORDPRESS_ADMIN_USER=hans" >> $(ENV_FILE); \
+			echo "WORDPRESS_ADMIN_PASSWORD=hans_password" >> $(ENV_FILE); \
+			echo "WORDPRESS_ADMIN_EMAIL=hans@example.com" >> $(ENV_FILE); \
 			echo "WORDPRESS_SITE_TITLE='WordPress Site'" >> $(ENV_FILE); \
 			echo "WORDPRESS_DOMAIN=localhost" >> $(ENV_FILE); \
 			echo "WORDPRESS_USER=wordpress_user" >> $(ENV_FILE); \
