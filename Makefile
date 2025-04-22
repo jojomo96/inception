@@ -44,7 +44,7 @@ env:
 			echo "MYSQL_USER=wordpress_db_user" >> $(ENV_FILE); \
 			echo "MYSQL_PASSWORD=wordpress_db_pass" >> $(ENV_FILE); \
 			echo "WORDPRESS_TABLE_PREFIX=wp_" >> $(ENV_FILE); \
-			echo "WORDPRESS_SITE_URL=https://jmoritz.42.fr:8080" >> $(ENV_FILE); \
+			echo "WORDPRESS_SITE_URL=https://jmoritz.42.fr" >> $(ENV_FILE); \
 			echo "WORDPRESS_ADMIN_USER=hans" >> $(ENV_FILE); \
 			echo "WORDPRESS_ADMIN_PASSWORD=hans_password" >> $(ENV_FILE); \
 			echo "WORDPRESS_ADMIN_EMAIL=hans@example.com" >> $(ENV_FILE); \
