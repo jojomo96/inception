@@ -123,9 +123,29 @@ services:
 
 volumes:
     mariadb_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: "/home/login/data"
+            o: bind
     wordpress_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: "/home/login/data"
+            o: bind
     redis_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: "/home/login/data"
+            o: bind
     adminer_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: "/home/login/data"
+            o: bind
 
 networks:
     my_network:
