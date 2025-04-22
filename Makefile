@@ -10,6 +10,10 @@ all: create-data-dir build up
 
 create-data-dir:
 	mkdir -p $(DATA_DIR)
+	mkdir -p $(DATA_DIR)/wordpress
+	mkdir -p $(DATA_DIR)/mariadb
+	mkdir -p $(DATA_DIR)/adminer
+	mkdir -p $(DATA_DIR)/redis
 
 build:
 	$(DOCKER_COMPOSE) build
