@@ -28,12 +28,14 @@ clean: down
 	$(DOCKER_COMPOSE) rm -f
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
 	rm -rf $(DATA_DIR)
-	rm -f $(ENV_FILE)
 
 re: clean all
 
 status:
 	$(DOCKER_COMPOSE) ps
+
+clean-env:
+	rm -f $(ENV_FILE)
 
 env:
 	@if [ ! -f $(ENV_FILE) ]; then \
