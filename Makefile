@@ -1,7 +1,7 @@
 # Makefile for Inception project
 
 # Variables
-DOCKER_COMPOSE = docker compose -f srcs/requirements/docker-compose.yml
+DOCKER_COMPOSE = docker compose -f srcs/docker-compose.yml
 ENV_FILE = srcs/.env
 
 # Targets
