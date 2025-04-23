@@ -1,7 +1,7 @@
 # Makefile for Inception project
 
 # Variables
-DOCKER_COMPOSE = docker compose -f srcs/docker-compose.yml
+DOCKER_COMPOSE = sudo docker compose -f srcs/docker-compose.yml
 ENV_FILE = srcs/.env
 DATA_DIR = /home/jmoritz/data
 
