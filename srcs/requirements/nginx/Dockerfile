@@ -1,5 +1,3 @@
-FROM debian:11
-
 # Use Debian 11 as the base image
 FROM debian:11
 
