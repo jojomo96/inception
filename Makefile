@@ -31,7 +31,7 @@ down:
 clean: down
 	$(DOCKER_COMPOSE) rm -f
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
-	rm -rf $(DATA_DIR)
+	sudo rm -rf $(DATA_DIR)
 
 re: clean all
 
