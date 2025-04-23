@@ -1,7 +1,7 @@
 # Makefile for Inception project
 
 # Variables
-DOCKER_COMPOSE = sudo docker compose -f srcs/docker-compose.yml
+DOCKER_COMPOSE = docker compose -f srcs/docker-compose.yml
 ENV_FILE = srcs/.env
 DATA_DIR = /home/jmoritz/data
 
@@ -31,7 +31,7 @@ down:
 clean: down
 	$(DOCKER_COMPOSE) rm -f
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
-	sudo rm -rf $(DATA_DIR)
+	rm -rf $(DATA_DIR)
 
 re: clean all
 
