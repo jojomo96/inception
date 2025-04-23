@@ -16,6 +16,10 @@ create-data-dir:
 	mkdir -p $(DATA_DIR)/redis
 
 build:
+	@if [ ! -f $(ENV_FILE) ]; then \
+		echo "Error: $(ENV_FILE) not found. Please run 'make env' first."; \
+		exit 1; \
+	fi
 	$(DOCKER_COMPOSE) build
 
 up:
